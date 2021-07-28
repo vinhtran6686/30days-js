@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Understanding JavaScript's Capture</title>
+  </head>
+  <body class="bod">
+    <div class="one">
+      <div class="two">
+        <div class="three"></div>
+      </div>
+    </div>
+
+    <style>
+      html {
+        box-sizing: border-box;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      div {
+        width: 100%;
+        padding: 100px;
+      }
+
+      .one {
+        background: thistle;
+      }
+
+      .two {
+        background: mistyrose;
+      }
+
+      .three {
+        background: coral;
+      }
+    </style>
+
+    <button></button>
+    <script>
+      const divs = document.querySelectorAll("div");
+      const button = document.querySelector("button");
+
+      function logText(e) {
+        console.log(this.classList.value);
+        // e.stopPropagation(); // stop bubbling!
+        // console.log(this);
+      }
+
+      divs.forEach((div) =>
+        div.addEventListener("click", logText, {
+          capture: false,
+          once: true,
+        })
+      );
+
+      button.addEventListener(
+        "click",
+        () => {
+          console.log("Click!!!");
+        },
+        {
+          once: true,
+        }
+      );
+
+      // ========= ******** =========
+      // default click is bubbling 
+      // order element: "if click .three " in console.log -> default is way up 
+      // .three 
+      // .two
+      // .one 
+
+      // to set invert become way down 
+      // set capture: true,
+      // to set only click this element -> e.stopPropagation();
+
+      document.addEventListener('nameEvent', func, object);
+        object{
+          // capture:false; default is false -> bubbling with way up 
+          // once: true, set run once time when page load and don't trigger anytime
+        }
+      // ========= ******** =========
+    </script>
+  </body>
+</html>
